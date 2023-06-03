@@ -1,6 +1,4 @@
-use glam::Vec3;
-
-use crate::{material::Material, Ray, Record};
+use crate::{material::Material, Ray, Record, Vec3};
 
 pub struct Sphere {
     pub center: Vec3,

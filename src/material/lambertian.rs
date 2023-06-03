@@ -1,5 +1,4 @@
-use glam::Vec3;
-use crate::{random, utils, Ray};
+use crate::{random, utils, Ray, Vec3};
 
 #[derive(Clone)]
 pub struct Lambertian {

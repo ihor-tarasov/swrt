@@ -1,6 +1,4 @@
-use glam::{Vec3, vec3};
-
-use crate::{material::{self, Material}, Ray};
+use crate::{material::{self, Material}, Ray, Vec3, vec3};
 
 #[derive(Clone)]
 pub struct Record {

@@ -1,6 +1,4 @@
-use glam::{Vec3, vec3};
-
-use crate::{object::Hit, utils, Record};
+use crate::{object::Hit, utils, Record, Vec3, vec3};
 
 pub struct Ray {
     pub origin: Vec3,

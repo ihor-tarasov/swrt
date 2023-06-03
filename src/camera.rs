@@ -1,6 +1,4 @@
-use glam::Vec3;
-
-use crate::{random, Ray};
+use crate::{random, Ray, Vec3};
 
 pub struct Camera {
     origin: Vec3,

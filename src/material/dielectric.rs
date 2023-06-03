@@ -1,6 +1,4 @@
-use glam::{Vec3, vec3};
-
-use crate::{utils, Ray, Record};
+use crate::{utils, Ray, Record, Vec3, vec3};
 
 #[derive(Clone)]
 pub struct Dielectric {

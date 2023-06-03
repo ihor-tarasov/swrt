@@ -6,9 +6,7 @@ use std::{
     thread::JoinHandle,
 };
 
-use glam::{Vec3, vec3};
-
-use crate::{renderer::Block, Renderer};
+use crate::{renderer::Block, Renderer, Vec3, vec3};
 
 pub fn near_zero(v: Vec3) -> bool {
     const S: f32 = 1e-8;

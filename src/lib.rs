@@ -9,6 +9,7 @@ pub mod material;
 pub mod utils;
 pub mod object;
 pub mod renderer;
+pub mod math;
 
 pub use timer::Timer;
 pub use window::Window;
@@ -17,3 +18,4 @@ pub use camera::Camera;
 pub use record::Record;
 pub use utils::*;
 pub use renderer::Renderer;
+pub use math::*;

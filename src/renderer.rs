@@ -1,8 +1,5 @@
 use std::ops::AddAssign;
-
-use glam::Vec3;
-
-use crate::{color, object::Hit, Camera};
+use crate::{color, object::Hit, Camera, Vec3};
 
 pub struct Block {
     pub x: usize,

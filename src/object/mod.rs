@@ -1,6 +1,4 @@
-use glam::Vec3;
-
-use crate::{Ray, Record, material::Material};
+use crate::{Ray, Record, material::Material, Vec3};
 
 use self::{hit_list::HitList, sphere::Sphere};
 

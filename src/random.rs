@@ -1,6 +1,6 @@
 use std::ops::Range;
 
-use glam::{Vec3, vec3};
+use crate::{Vec3, vec3};
 
 pub fn f32(r: Range<f32>) -> f32 {
     r.start + (r.end - r.start) * fastrand::f32()

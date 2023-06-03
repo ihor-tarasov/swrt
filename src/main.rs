@@ -4,13 +4,12 @@ use std::{
     time::Duration,
 };
 
-use glam::vec3;
 use swrt::{
     material,
     object::{self, Hit},
     random,
     renderer::Block,
-    utils, Camera, Renderer, Window,
+    utils, Camera, Renderer, Window, vec3,
 };
 
 fn random_scene() -> Hit {
