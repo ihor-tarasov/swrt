@@ -10,7 +10,7 @@ use crate::{renderer::Block, Renderer, Vec3, vec3};
 
 pub fn near_zero(v: Vec3) -> bool {
     const S: f32 = 1e-8;
-    v.x.abs() < S && v.y.abs() < S && v.z.abs() < S
+    v.x().abs() < S && v.y().abs() < S && v.z().abs() < S
 }
 
 pub fn reflect(v: Vec3, n: Vec3) -> Vec3 {
@@ -18,7 +18,7 @@ pub fn reflect(v: Vec3, n: Vec3) -> Vec3 {
 }
 
 pub fn mul_per_comp(a: Vec3, b: Vec3) -> Vec3 {
-    vec3(a.x * b.x, a.y * b.y, a.z * b.z)
+    vec3(a.x() * b.x(), a.y() * b.y(), a.z() * b.z())
 }
 
 pub fn refract(uv: Vec3, n: Vec3, etai_over_etat: f32) -> Vec3 {

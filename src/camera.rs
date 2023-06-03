@@ -1,5 +1,8 @@
+use serde::{Serialize, Deserialize};
+
 use crate::{random, Ray, Vec3};
 
+#[derive(Serialize, Deserialize)]
 pub struct Camera {
     origin: Vec3,
     lower_left_corner: Vec3,
@@ -51,7 +54,7 @@ impl Camera {
 
     pub fn get_ray(&self, s: f32, t: f32) -> Ray {
         let rd = self.lens_radius * random::in_unit_disk();
-        let offset = self.u * rd.x + self.v * rd.y;
+        let offset = self.u * rd.x() + self.v * rd.y();
 
         Ray {
             origin: self.origin + offset,

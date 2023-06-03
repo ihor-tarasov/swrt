@@ -1,5 +1,8 @@
+use serde::{Serialize, Deserialize};
+
 use crate::{material::Material, Ray, Record, Vec3};
 
+#[derive(Serialize, Deserialize)]
 pub struct Sphere {
     pub center: Vec3,
     pub radius: f32,

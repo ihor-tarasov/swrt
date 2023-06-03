@@ -1,6 +1,8 @@
+use serde::{Serialize, Deserialize};
+
 use crate::{random, utils, Ray, Vec3};
 
-#[derive(Clone)]
+#[derive(Clone, Serialize, Deserialize)]
 pub struct Metal {
     pub albedo: Vec3,
     pub fuzz: f32,

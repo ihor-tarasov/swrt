@@ -1,3 +1,5 @@
+use serde::{Serialize, Deserialize};
+
 use crate::{Ray, Record, Vec3};
 use self::{dielectric::Dielectric, lambertian::Lambertian, metal::Metal};
 
@@ -5,7 +7,7 @@ mod dielectric;
 mod lambertian;
 mod metal;
 
-#[derive(Clone)]
+#[derive(Clone, Serialize, Deserialize)]
 pub enum Material {
     Lambertian(Lambertian),
     Metal(Metal),

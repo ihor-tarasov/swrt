@@ -39,7 +39,7 @@ impl Ray {
             }
         } else {
             let norm = self.direction.normalize();
-            let t = 0.5 * (norm.y + 1.0);
+            let t = 0.5 * (norm.y() + 1.0);
             (1.0 - t) * vec3(1.0, 1.0, 1.0) + t * vec3(0.5, 0.7, 1.0)
         }
     }

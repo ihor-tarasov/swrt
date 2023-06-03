@@ -1,7 +1,10 @@
+use serde::{Serialize, Deserialize};
+
 use crate::{Ray, Record};
 
 use super::Hit;
 
+#[derive(Serialize, Deserialize)]
 pub struct HitList(Vec<Hit>);
 
 impl HitList {

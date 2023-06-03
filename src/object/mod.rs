@@ -1,3 +1,5 @@
+use serde::{Serialize, Deserialize};
+
 use crate::{Ray, Record, material::Material, Vec3};
 
 use self::{hit_list::HitList, sphere::Sphere};
@@ -5,6 +7,7 @@ use self::{hit_list::HitList, sphere::Sphere};
 mod hit_list;
 mod sphere;
 
+#[derive(Serialize, Deserialize)]
 pub enum Hit {
     Sphere(Box<Sphere>),
     HitList(Box<HitList>),

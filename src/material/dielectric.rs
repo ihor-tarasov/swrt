@@ -1,6 +1,8 @@
+use serde::{Serialize, Deserialize};
+
 use crate::{utils, Ray, Record, Vec3, vec3};
 
-#[derive(Clone)]
+#[derive(Clone, Serialize, Deserialize)]
 pub struct Dielectric {
     pub ir: f32,
 }
