@@ -6,27 +6,27 @@ use std::{
     thread::JoinHandle,
 };
 
-use cgmath::{vec3, InnerSpace, Vector3};
+use glam::{Vec3, vec3};
 
 use crate::{renderer::Block, Renderer};
 
-pub fn near_zero(v: Vector3<f32>) -> bool {
+pub fn near_zero(v: Vec3) -> bool {
     const S: f32 = 1e-8;
     v.x.abs() < S && v.y.abs() < S && v.z.abs() < S
 }
 
-pub fn reflect(v: Vector3<f32>, n: Vector3<f32>) -> Vector3<f32> {
+pub fn reflect(v: Vec3, n: Vec3) -> Vec3 {
     v - 2.0 * v.dot(n) * n
 }
 
-pub fn mul_per_comp(a: Vector3<f32>, b: Vector3<f32>) -> Vector3<f32> {
+pub fn mul_per_comp(a: Vec3, b: Vec3) -> Vec3 {
     vec3(a.x * b.x, a.y * b.y, a.z * b.z)
 }
 
-pub fn refract(uv: Vector3<f32>, n: Vector3<f32>, etai_over_etat: f32) -> Vector3<f32> {
+pub fn refract(uv: Vec3, n: Vec3, etai_over_etat: f32) -> Vec3 {
     let cos_theta = (-uv).dot(n).min(1.0);
     let r_out_perp = etai_over_etat * (uv + cos_theta * n);
-    let r_out_parallel = -(1.0 - r_out_perp.magnitude2()).abs().sqrt() * n;
+    let r_out_parallel = -(1.0 - r_out_perp.length_squared()).abs().sqrt() * n;
     r_out_perp + r_out_parallel
 }
 

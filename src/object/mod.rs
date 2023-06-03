@@ -1,4 +1,4 @@
-use cgmath::Vector3;
+use glam::Vec3;
 
 use crate::{Ray, Record, material::Material};
 
@@ -35,7 +35,7 @@ impl Hit {
     }
 }
 
-pub fn sphere(center: Vector3<f32>, radius: f32, mat: Material) -> Hit {
+pub fn sphere(center: Vec3, radius: f32, mat: Material) -> Hit {
     Hit::Sphere(Box::new(Sphere {
         center,
         radius,

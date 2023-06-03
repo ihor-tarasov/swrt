@@ -4,7 +4,7 @@ use std::{
     time::Duration,
 };
 
-use cgmath::{vec3, InnerSpace};
+use glam::vec3;
 use swrt::{
     material,
     object::{self, Hit},
@@ -32,7 +32,7 @@ fn random_scene() -> Hit {
                 b as f32 + 0.9 * fastrand::f32(),
             );
 
-            if (center - vec3(4.0, 0.2, 0.0)).magnitude() > 0.9 {
+            if (center - vec3(4.0, 0.2, 0.0)).length_squared() > 0.9 {
                 let sphere_material;
 
                 if choose_mat < 0.8 {
@@ -70,12 +70,12 @@ fn random_scene() -> Hit {
 fn main() {
     let width = 1920;
     let height = 1080;
-    let samples_per_pixel = 500;
-    let ray_depth = 50;
-    let samples_per_step = 1;
+    let samples_per_pixel = 120;
+    let ray_depth = 10;
+    let samples_per_step = 60;
     let threads = 12;
 
-    let block_size = 128;
+    let block_size = 64;
 
     let mut width_blocks_count = width / block_size;
     if width % block_size != 0 {

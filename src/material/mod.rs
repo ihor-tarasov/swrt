@@ -1,4 +1,6 @@
-use crate::{Ray, Record, math::Vec3};
+use glam::Vec3;
+
+use crate::{Ray, Record};
 use self::{dielectric::Dielectric, lambertian::Lambertian, metal::Metal};
 
 mod dielectric;

@@ -9,7 +9,6 @@ pub mod material;
 pub mod utils;
 pub mod object;
 pub mod renderer;
-pub mod math;
 
 pub use timer::Timer;
 pub use window::Window;

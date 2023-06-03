@@ -1,6 +1,6 @@
-use cgmath::InnerSpace;
+use glam::Vec3;
 
-use crate::{math::Vec3, random, Ray};
+use crate::{random, Ray};
 
 pub struct Camera {
     origin: Vec3,

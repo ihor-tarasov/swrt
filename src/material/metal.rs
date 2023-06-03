@@ -1,6 +1,5 @@
-use cgmath::{InnerSpace};
-
-use crate::{random, utils, Ray, math::Vec3};
+use crate::{random, utils, Ray};
+use glam::Vec3;
 
 #[derive(Clone)]
 pub struct Metal {

@@ -1,11 +1,11 @@
-use cgmath::{vec3, InnerSpace, Vector3};
+use glam::{Vec3, vec3};
 
 use crate::{material::{self, Material}, Ray};
 
 #[derive(Clone)]
 pub struct Record {
-    pub point: Vector3<f32>,
-    pub normal: Vector3<f32>,
+    pub point: Vec3,
+    pub normal: Vec3,
     pub t: f32,
     pub front_face: bool,
     pub mat: Material,
@@ -24,7 +24,7 @@ impl Default for Record {
 }
 
 impl Record {
-    pub fn set_face_normal(&mut self, r: &Ray, outward_normal: Vector3<f32>) {
+    pub fn set_face_normal(&mut self, r: &Ray, outward_normal: Vec3) {
         self.front_face = r.direction.dot(outward_normal) < 0.0;
         self.normal = if self.front_face {
             outward_normal

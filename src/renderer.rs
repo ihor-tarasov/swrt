@@ -1,6 +1,6 @@
 use std::ops::AddAssign;
 
-use cgmath::Vector3;
+use glam::Vec3;
 
 use crate::{color, object::Hit, Camera};
 
@@ -9,7 +9,7 @@ pub struct Block {
     pub y: usize,
     pub block_size: usize,
     pub sample: usize,
-    pub block: Vec<Vector3<f32>>,
+    pub block: Vec<Vec3>,
 }
 
 impl Block {
@@ -49,7 +49,7 @@ pub struct Renderer {
 }
 
 impl Renderer {
-    pub fn render_pixel(&self, x: usize, y: usize) -> Vector3<f32> {
+    pub fn render_pixel(&self, x: usize, y: usize) -> Vec3 {
         let u = (x as f32 + fastrand::f32()) / (self.width - 1) as f32;
         let v = (y as f32 + fastrand::f32()) / (self.height - 1) as f32;
         let r = self.camera.get_ray(u, v);

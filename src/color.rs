@@ -1,6 +1,4 @@
-use cgmath::vec3;
-
-use crate::math::Vec3;
+use glam::{vec3, Vec3};
 
 pub fn from_rgb(r: u8, g: u8, b: u8) -> u32 {
     u32::from_be_bytes([0xFF, r, g, b])

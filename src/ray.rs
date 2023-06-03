@@ -1,10 +1,10 @@
-use cgmath::{vec3, InnerSpace, Vector3};
+use glam::{Vec3, vec3};
 
 use crate::{object::Hit, utils, Record};
 
 pub struct Ray {
-    pub origin: Vector3<f32>,
-    pub direction: Vector3<f32>,
+    pub origin: Vec3,
+    pub direction: Vec3,
 }
 
 impl Default for Ray {
@@ -17,11 +17,11 @@ impl Default for Ray {
 }
 
 impl Ray {
-    pub fn at(&self, t: f32) -> Vector3<f32> {
+    pub fn at(&self, t: f32) -> Vec3 {
         self.origin + t * self.direction
     }
 
-    pub fn trace(&self, world: &Hit, depth: usize) -> Vector3<f32> {
+    pub fn trace(&self, world: &Hit, depth: usize) -> Vec3 {
         let mut rec = Record::default();
 
         if depth == 0 {

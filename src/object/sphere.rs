@@ -1,6 +1,6 @@
-use cgmath::{InnerSpace};
+use glam::Vec3;
 
-use crate::{Ray, Record, material::Material, math::Vec3};
+use crate::{material::Material, Ray, Record};
 
 pub struct Sphere {
     pub center: Vec3,
@@ -11,9 +11,9 @@ pub struct Sphere {
 impl Sphere {
     pub fn hit(&self, r: &Ray, t_min: f32, t_max: f32, rec: &mut Record) -> bool {
         let oc = r.origin - self.center;
-        let a = r.direction.magnitude2();
+        let a = r.direction.length_squared();
         let half_b = oc.dot(r.direction);
-        let c = oc.magnitude2() - self.radius * self.radius;
+        let c = oc.length_squared() - self.radius * self.radius;
 
         let discriminant = half_b * half_b - a * c;
         if discriminant < 0.0 {
