@@ -6,27 +6,9 @@ use std::{
     thread::JoinHandle,
 };
 
-use crate::{renderer::Block, Renderer, Vec3, vec3};
+use rt::Renderer;
 
-pub fn near_zero(v: Vec3) -> bool {
-    const S: f32 = 1e-8;
-    v.x().abs() < S && v.y().abs() < S && v.z().abs() < S
-}
-
-pub fn reflect(v: Vec3, n: Vec3) -> Vec3 {
-    v - 2.0 * v.dot(n) * n
-}
-
-pub fn mul_per_comp(a: Vec3, b: Vec3) -> Vec3 {
-    vec3(a.x() * b.x(), a.y() * b.y(), a.z() * b.z())
-}
-
-pub fn refract(uv: Vec3, n: Vec3, etai_over_etat: f32) -> Vec3 {
-    let cos_theta = (-uv).dot(n).min(1.0);
-    let r_out_perp = etai_over_etat * (uv + cos_theta * n);
-    let r_out_parallel = -(1.0 - r_out_perp.length_squared()).abs().sqrt() * n;
-    r_out_perp + r_out_parallel
-}
+use crate::block::Block;
 
 pub fn spawn_threads(
     count: usize,
@@ -45,7 +27,7 @@ pub fn spawn_threads(
         let out_sender = out_sender.clone();
         handles.push(std::thread::spawn(move || loop {
             let (renderer, mut block) = out_receiver.lock().unwrap().recv().unwrap();
-            renderer.read().unwrap().render_block(&mut block);
+            block.render(&renderer.read().unwrap());
             out_sender.send(block).unwrap();
         }));
     }

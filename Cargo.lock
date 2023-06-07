@@ -766,6 +766,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "rt"
+version = "0.1.0"
+source = "git+https://github.com/ihor-tarasov/rt.git?branch=master#94a8527130b6c909863a5ba9321c5b5e4cf25fed"
+dependencies = [
+ "fastrand",
+ "glam",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "rustix"
 version = "0.37.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -886,9 +897,9 @@ name = "swrt"
 version = "0.1.0"
 dependencies = [
  "fastrand",
- "glam",
  "image",
  "minifb",
+ "rt",
  "serde",
  "serde_json",
 ]

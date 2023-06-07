@@ -1,4 +1,4 @@
-use crate::{Vec3, vec3};
+use rt::{Vec3, vec3};
 
 pub fn from_rgb(r: u8, g: u8, b: u8) -> u32 {
     u32::from_be_bytes([0xFF, r, g, b])

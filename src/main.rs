@@ -1,39 +1,44 @@
 use std::{
     collections::HashSet,
+    fs::File,
     sync::{Arc, Mutex, RwLock},
-    time::Duration, fs::File,
+    time::Duration,
 };
 
-use swrt::{
-    renderer::Block,
-    utils, vec3, Renderer, Window,
-};
+use rt::{Renderer, vec3};
+use swrt::{block::Block, utils, Scene, Window};
 
 fn main() {
-    let renderer = if let Ok(file) = File::open("setup.json") {
+    let scene = if let Ok(file) = File::open("setup.json") {
         serde_json::de::from_reader(file).unwrap()
     } else {
-        let renderer = Renderer::default();
-        File::create("setup.json").and_then(|file| {
-            serde_json::ser::to_writer_pretty(file, &renderer).unwrap();
-            Ok(())
-        }).unwrap();
+        let renderer = Scene::default();
+        File::create("setup.json")
+            .and_then(|file| {
+                serde_json::ser::to_writer_pretty(file, &renderer).unwrap();
+                Ok(())
+            })
+            .unwrap();
         renderer
     };
+    let samples_per_step = scene.samples_per_step;
+    let samples_per_pixel = scene.samples_per_pixel;
+    let width = scene.width;
+    let height = scene.height;
 
-    let renderer = Arc::new(RwLock::new(renderer));
+    let renderer = Arc::new(RwLock::new(Into::<Renderer>::into(scene)));
 
     let threads = 12;
 
     let block_size = 64;
 
-    let mut width_blocks_count = renderer.read().unwrap().width / block_size;
-    if renderer.read().unwrap().width % block_size != 0 {
+    let mut width_blocks_count = width / block_size;
+    if width % block_size != 0 {
         width_blocks_count += 1;
     }
 
-    let mut height_blocks_count = renderer.read().unwrap().height / block_size;
-    if renderer.read().unwrap().height % block_size != 0 {
+    let mut height_blocks_count = height / block_size;
+    if height % block_size != 0 {
         height_blocks_count += 1;
     }
 
@@ -47,6 +52,7 @@ fn main() {
                 block_size,
                 sample: 0,
                 block: vec![vec3(0.0, 0.0, 0.0); block_size * block_size],
+                samples_to_do: samples_per_step,
             });
             done_registry.insert((x, y));
         }
@@ -71,12 +77,12 @@ fn main() {
         })
     };
 
-    let mut buffer = vec![0u32; renderer.read().unwrap().width * renderer.read().unwrap().height];
-    let mut window = Window::new("SwRt", renderer.read().unwrap().width, renderer.read().unwrap().height);
+    let mut buffer = vec![0u32; width * height];
+    let mut window = Window::new("SwRt", width, height);
 
     let mut percent_done = 0.0;
     let step_value = 100.0
-        / ((renderer.read().unwrap().samples_per_pixel / renderer.read().unwrap().samples_per_step) * width_blocks_count * height_blocks_count)
+        / ((samples_per_pixel / samples_per_step) * width_blocks_count * height_blocks_count)
             as f32;
 
     while window.is_open() {
@@ -84,16 +90,16 @@ fn main() {
             Ok(data) => data,
             Err(error) => match error {
                 std::sync::mpsc::RecvTimeoutError::Timeout => {
-                    window.update(&buffer, renderer.read().unwrap().width, renderer.read().unwrap().height, percent_done);
+                    window.update(&buffer, width, height, percent_done);
                     continue;
                 }
                 std::sync::mpsc::RecvTimeoutError::Disconnected => panic!(),
             },
         };
 
-        block.draw(&mut buffer, renderer.read().unwrap().width, renderer.read().unwrap().height);
+        block.draw(&mut buffer, width, height);
 
-        if block.sample < renderer.read().unwrap().samples_per_pixel {
+        if block.sample < samples_per_pixel {
             let mut blocks_to_render_queue = blocks_to_render_queue.lock().unwrap();
             let index = if blocks_to_render_queue.len() > 1 {
                 fastrand::usize(0..blocks_to_render_queue.len())
@@ -105,12 +111,12 @@ fn main() {
             done_registry.remove(&(block.x, block.y));
 
             if done_registry.is_empty() {
-                utils::save_result("result.png", &buffer, renderer.read().unwrap().width, renderer.read().unwrap().height);
+                utils::save_result("result.png", &buffer, width, height);
                 return;
             }
         }
 
-        window.update(&buffer, renderer.read().unwrap().width, renderer.read().unwrap().height, percent_done);
+        window.update(&buffer, width, height, percent_done);
 
         percent_done += step_value;
     }
